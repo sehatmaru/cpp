@@ -11,6 +11,8 @@ public class Main {
 //        System.out.println(isPalindrome(242));
 //        System.out.println(romanToInt("XII"));
 //        System.out.println(longestCommonPrefix(new String[]{"ab", "a"}));
+//        System.out.println(mergeTwoLists(new ListNode(5, new ListNode(3)), new ListNode(8, new ListNode(6, new ListNode(9)))).toString());
+        System.out.println(removeDuplicates(new int[]{0,0,1,1,1,2,2,3,3,4}));
     }
 
 //    1. Two Sum
@@ -85,20 +87,20 @@ public class Main {
         BigInteger sum = numA.add(numB);
         String sumString = String.valueOf(sum);
 
-        List<ListNode> listnodes = new ArrayList<>();
+        List<ListNode> listNodes = new ArrayList<>();
 
         for (int i = sumString.length()-1; i >= 0; i--) {
             char digit = sumString.charAt(i);
             int digitValue = Character.getNumericValue(digit);
 
-            listnodes.add(new ListNode(digitValue));
+            listNodes.add(new ListNode(digitValue));
         }
 
-        for (int i=0; i< listnodes.size(); i++) {
-            if (i != listnodes.size() - 1) listnodes.get(i).next = listnodes.get(i+1);
+        for (int i=0; i< listNodes.size(); i++) {
+            if (i != listNodes.size() - 1) listNodes.get(i).next = listNodes.get(i+1);
         }
 
-        return listnodes.get(0);
+        return listNodes.get(0);
     }
 
 //    3. Longest Substring Without Repeating Characters
@@ -200,9 +202,55 @@ public class Main {
         return temp.toString();
     }
 
-//    20. Valid Parentheses
-    public static boolean isValid(String s) {
+//    21. Merge Two Sorted Lists
+    public static ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        List<Integer> list = new ArrayList<>();
 
+        for (int i=0; i<=50; i++) {
+            if (list1 != null) {
+                list.add(list1.val);
+
+                if (list1.next != null) list1 = list1.next;
+                else break;
+            }
+        }
+
+        for (int i=0; i<=50; i++) {
+            if (list2 != null) {
+                list.add(list2.val);
+
+                if (list2.next != null) list2 = list2.next;
+                else break;
+            }
+        }
+
+        list.sort(Collections.reverseOrder());
+
+        List<ListNode> listNodes = new ArrayList<>();
+
+        for (int i = list.size()-1; i >= 0; i--) {
+            listNodes.add(new ListNode(list.get(i)));
+        }
+
+        for (int i=0; i< listNodes.size(); i++) {
+            if (i != listNodes.size() - 1) listNodes.get(i).next = listNodes.get(i+1);
+        }
+
+        return listNodes.size() > 0 ? listNodes.get(0) : null;
+    }
+
+//    26. Remove Duplicates from Sorted Array
+    public static int removeDuplicates(int[] nums) {
+        int result = 0;
+
+        for (int i=0; i<nums.length; i++) {
+            if (nums[result] < nums[i]) {
+                result++;
+                nums[result] = nums[i];
+            }
+        }
+
+        return result;
     }
 }
 
