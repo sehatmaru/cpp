@@ -12,7 +12,13 @@ public class Main {
 //        System.out.println(romanToInt("XII"));
 //        System.out.println(longestCommonPrefix(new String[]{"ab", "a"}));
 //        System.out.println(mergeTwoLists(new ListNode(5, new ListNode(3)), new ListNode(8, new ListNode(6, new ListNode(9)))).toString());
-        System.out.println(removeDuplicates(new int[]{0,0,1,1,1,2,2,3,3,4}));
+//        System.out.println(removeDuplicates(new int[]{0,0,1,1,1,2,2,3,3,4}));
+//        System.out.println(removeElement(new int[]{0,0,1,1,1,2,2,3,3,4}, 0));
+//        System.out.println(strStr("leetcode", "code"));
+//        System.out.println(searchInsert(new int[]{1,3,5,6}, 5));
+//        System.out.println(lengthOfLastWord("   fly me   to   the moon  "));
+//        System.out.println(deleteDuplicates(new ListNode(1, new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(3)))))));
+//        System.out.println(isSameTree(new TreeNode(1, new TreeNode(2), new TreeNode(3)), new TreeNode(1, new TreeNode(), new TreeNode(3))));
     }
 
 //    1. Two Sum
@@ -252,6 +258,93 @@ public class Main {
 
         return result;
     }
+
+//    27. Remove Element
+    public static int removeElement(int[] nums, int val) {
+        int counter = 0;
+
+        for (int i=0; i<nums.length; i++) {
+            if (nums[i] != val) {
+                if (counter != i) nums[counter] = nums[i];
+
+                counter++;
+            }
+        }
+
+        return counter;
+    }
+
+//    28. Find the Index of the First Occurrence in a String
+    public static int strStr(String haystack, String needle) {
+        int result = -1;
+
+        if (haystack.contains(needle)) {
+            for (int i=0; i<haystack.length(); i++) {
+                if (haystack.charAt(i) == needle.charAt(0)) {
+                    result = i;
+
+                    if (needle.length() == 1) return result;
+
+                    for (int j=1; j<needle.length(); j++) {
+                        if (haystack.charAt(i+j) != needle.charAt(j)) break;
+                        if (haystack.charAt(i + j) == needle.charAt(j) && j == needle.length() - 1) {
+                            return result;
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+//    35. Search Insert Position
+    public static int searchInsert(int[] nums, int target) {
+        if (nums.length == 1) {
+            return target >= nums[0] ? 1 : 0;
+        }
+
+        for (int i=0; i<nums.length; i++) {
+            if (i == nums.length-1) {
+                return nums.length;
+            }
+
+            if (nums[i] <= target && nums[i+1] >= target) {
+                return i+1;
+            }
+        }
+
+        return 0;
+    }
+
+//    58. Length of Last Word
+    public static int lengthOfLastWord(String s) {
+        String[] arr = s.split(" ");
+        return arr[arr.length-1].length();
+    }
+
+//    83. Remove Duplicates from Sorted List
+    public static ListNode deleteDuplicates(ListNode head) {
+        ListNode current = head;
+
+        while (current != null && current.next != null) {
+            if (current.val == current.next.val) {
+                current.next = current.next.next;
+            } else {
+                current = current.next;
+            }
+        }
+
+        return head;
+    }
+
+//    100. Same Tree
+    public static boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p == null && q == null) return true;
+        if (p == null || q == null || p.val != q.val) return false;
+
+        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+    }
 }
 
 class ListNode {
@@ -260,4 +353,17 @@ class ListNode {
     ListNode() {}
     ListNode(int val) { this.val = val; }
     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+}
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
 }
