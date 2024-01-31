@@ -19,6 +19,7 @@ public class Main {
 //        System.out.println(lengthOfLastWord("   fly me   to   the moon  "));
 //        System.out.println(deleteDuplicates(new ListNode(1, new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(3)))))));
 //        System.out.println(isSameTree(new TreeNode(1, new TreeNode(2), new TreeNode(3)), new TreeNode(1, new TreeNode(), new TreeNode(3))));
+        System.out.println(convert("Apalindromeisaword,phrase,number,orothersequenceofunitsthatcanbereadthesamewayineitherdirection,withgeneralallowancesforadjustmentstopunctuationandworddividers.", 3));
     }
 
 //    1. Two Sum
@@ -344,6 +345,52 @@ public class Main {
         if (p == null || q == null || p.val != q.val) return false;
 
         return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+    }
+
+//    6. Zigzag Conversion
+    public static String convert(String s, int numRows) {
+        int diff = 0;
+        int numCols = 100000;
+        String[][] map = new String[numRows][numCols];
+        StringBuilder result = new StringBuilder();
+
+        int counter = 0;
+        int currentRow = numRows-2;
+
+        int i = 0;
+
+        while (counter != s.length()) {
+            if (diff > 0) {
+                map[currentRow][i] = String.valueOf(s.charAt(counter));
+
+                currentRow--;
+                counter++;
+                diff--;
+
+                if (diff == 0) currentRow = 0;
+            } else {
+                for (int j = 0; j < numRows; j++) {
+                    map[j][i] = String.valueOf(s.charAt(counter));
+                    counter++;
+
+                    if (counter == s.length()) break;
+                }
+
+                diff = numRows - 2;
+                currentRow = numRows - 2;
+            }
+
+            i++;
+        }
+
+        for (int p=0; p<numRows; p++) {
+            for (int j=0; j<numCols; j++) {
+                String val = map[p][j];
+                if (val != null) result.append(val);
+            }
+        }
+
+        return result.toString();
     }
 }
 
