@@ -45,7 +45,7 @@ public class Q21 {
             if (i != listNodes.size() - 1) listNodes.get(i).next = listNodes.get(i+1);
         }
 
-        return listNodes.size() > 0 ? listNodes.get(0) : null;
+        return !listNodes.isEmpty() ? listNodes.get(0) : null;
     }
 
 }
